@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ControllerManager : MonoBehaviour {
 
-    enum BUTTON_BIT{
+    public enum BUTTON_BIT{
         PAD_LEFT    = 2,
         PAD_RIGHT   = 4,
         PAD_UP      = 8,
@@ -40,7 +40,7 @@ public class ControllerManager : MonoBehaviour {
         PAD_NUM,
     }
     public static PadInfo pad;
-
+    public static PadInfo beforePad;
 	// Use this for initialization
 	void Start () {
         pad.leftStick.x = Input.GetAxis("Horizontal");
@@ -89,10 +89,11 @@ public class ControllerManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        beforePad = pad;
         pad.leftStick.x = Input.GetAxis("Horizontal");
         pad.leftStick.y = 0.0f;
         pad.leftStick.z = Input.GetAxis("Vertical");
-
+        Debug.Log(pad.leftStick);
         pad.rightStick.x = Input.GetAxis("Horizontal2");
         pad.rightStick.y = 0.0f;
         pad.rightStick.z = Input.GetAxis("Vertical2");
@@ -166,12 +167,6 @@ public class ControllerManager : MonoBehaviour {
         {
             pad.button_bit |= (uint)BUTTON_BIT.PAD_TOUCH;
         }
-        Debug.Log("LeftStick" + pad.leftStick);
-        Debug.Log("RightStick" + pad.rightStick);
-        Debug.Log("L2Analog" + pad.L2);
-        Debug.Log("R2Analog" + pad.R2);
-        Debug.Log(Input.GetAxis("UpDown"));
-        Debug.Log(Input.GetAxis("LeftRight"));
 
         Debug.Log("ButtonBit" + pad.button_bit);
         if((pad.button_bit & (uint)BUTTON_BIT.PAD_CROSS) != 0){
@@ -182,4 +177,22 @@ public class ControllerManager : MonoBehaviour {
             Debug.Log("Press L1");
         }
 	}
+
+    public static bool IsPressButton(BUTTON_BIT bit)
+    {
+        if (0 != (pad.button_bit & (uint)bit))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static bool IsOneShotButton(BUTTON_BIT bit)
+    {
+        if ((0 != (pad.button_bit & (uint)bit)) && ((0 == (beforePad.button_bit & (uint)bit))))
+        {
+            return true;
+        }
+        return false;
+    }
 }
