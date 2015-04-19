@@ -4,26 +4,26 @@ using System.Collections;
 public class ControllerManager : MonoBehaviour {
 
     public enum BUTTON_BIT{
-        PAD_LEFT    = 2,
-        PAD_RIGHT   = 4,
-        PAD_UP      = 8,
-        PAD_DOWN    = 16,
-        PAD_SQUARE  = 32,
-        PAD_TRI     = 64,
-        PAD_CROSS   = 128,
-        PAD_CIRCLE  = 256,
-        PAD_L1      = 512,
-        PAD_L2      = 1024,
-        PAD_R1      = 2048,
-        PAD_R2      = 4096,
-        PAD_SELECT  = 8192,
-        PAD_START   = 16384,
-        PAD_R3      = 32768,
-        PAD_L3      = 65536,
-        PAD_HOME    = 131072,
-        PAD_OPTION  = 262144,
-        PAD_SHARE   = 524288,
-        PAD_TOUCH   = 1048576,
+        PAD_LEFT    = 0x01 << 1,
+        PAD_RIGHT   = 0x01 << 2,
+        PAD_UP      = 0x01 << 3,
+        PAD_DOWN    = 0x01 << 4,
+        PAD_SQUARE  = 0x01 << 5,
+        PAD_TRI     = 0x01 << 6,
+        PAD_CROSS   = 0x01 << 7,
+        PAD_CIRCLE  = 0x01 << 8,
+        PAD_L1      = 0x01 << 9,
+        PAD_L2      = 0x01 << 10,
+        PAD_R1      = 0x01 << 11,
+        PAD_R2      = 0x01 << 12,
+        PAD_SELECT  = 0x01 << 13,
+        PAD_START   = 0x01 << 14,
+        PAD_R3      = 0x01 << 15,
+        PAD_L3      = 0x01 << 16,
+        PAD_HOME    = 0x01 << 17,
+        PAD_OPTION  = 0x01 << 18,
+        PAD_SHARE   = 0x01 << 19,
+        PAD_TOUCH   = 0x01 << 20,
     };
 
     public struct PadInfo{
@@ -169,13 +169,6 @@ public class ControllerManager : MonoBehaviour {
         }
 
         Debug.Log("ButtonBit" + pad.button_bit);
-        if((pad.button_bit & (uint)BUTTON_BIT.PAD_CROSS) != 0){
-            Debug.Log("Press cross");
-        }
-        if ((pad.button_bit & (uint)BUTTON_BIT.PAD_L1) != 0)
-        {
-            Debug.Log("Press L1");
-        }
 	}
 
     public static bool IsPressButton(BUTTON_BIT bit)
